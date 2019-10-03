@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue Sur JobbY{% endblock %}
+{% block body %}
+<main>
+	<h2>Liste des Annonces</h2>
+	<section>
+	<div class="pagerfanta">   
+		{% for i, value in advertTab %}
+			<div class="advert">
+			<ul>	
+				<li>Titre de l'annonce: {{value.title}}</li>
+				<li>Auteur: {{value.author}}</li>
+				<li>Ecrit le; {{value.date.date}}</li>
+				<li><a href="{{path('advertdetails',{'id':value.id})}}">Detail de l'annonce</a></li>
+			</ul>
+			</div>
+		{% endfor %}
+		{{ pagerfanta(advertTab, 'twitter_bootstrap4') }}
+		</div>
+	</section>
+	
+</main>
+{% endblock %}

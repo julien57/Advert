@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue Sur JobbY{% endblock %}
+
+{% block body %}
+<main>
+	<section>
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+		{{ form_widget(form) }}
+  		{{ form_end(form) }}
+
+		<div class="rightbutton">
+			<a href="{{path('advertdetails',{'id':advertTo.id})}}"><i class="fas fa-undo"></i></i></a>
+		</div>
+	</section>
+</main>
+{% endblock %}

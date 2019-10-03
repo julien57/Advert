@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+        {% endblock %}
+    </head>
+    <body>
+    	<header>
+    		<div class="headertitle">
+        		<img src="{{asset('img/logo.png')}}">
+        		<h1>Bienvenue Sur JobbY</h1>
+    		</div>
+    		<nav>
+    			<a href="{{path('advert')}}">Accueil</a>
+    			<a href="{{path('advertAdd')}}">Ajouter Annonce</a>
+                {% if app.user %}
+                <a href="{{ path('fos_user_security_logout') }}">Se Deconnecter</a>
+                {% else %}
+                <a href="{{ path('fos_user_security_login') }}">Se Connecter</a>
+                <a href="{{ path('fos_user_registration_register') }}">Inscription</a>
+                {% endif %}
+                
+    		</nav> 
+    	</header>
+        {% block body %}{% endblock %}
+        <footer> 
+            <nav>
+                <a href="{{path('advert')}}">Accueil</a>
+                <a href="{{path('advertAdd')}}">Ajouter Annonce</a>
+                {% if app.user %}
+                <a href="{{ path('fos_user_security_logout') }}">Se Deconnecter</a>
+                {% else %}
+                <a href="{{ path('fos_user_security_login') }}">Se Connecter</a>
+                <a href="{{ path('fos_user_registration_register') }}">Inscription</a>
+                {% endif %}
+            </nav>          
+                <img src="{{asset('img/copyright.png')}}">
+                <p>Ce signe signifie "Copyright" ("Droit d'auteur" ou "Droit de Copie" en langue Anglaise) et indique la présence d'une création déposée ou non mais bénéficiant d'une protection au titre de la Propriété Intellectuelle et plus précisément du droit d'auteur. L'insertion de ce sigle ou symbole est facultative dans la majorité des pays du monde mais indispensable dans les pays (notamment les Etats-Unis d'Amérique) imposant l'enregistrement d'un "copyright" pour prétendre percevoir des droits d'auteur aux USA.</p>
+        </footer>
+        {% block javascripts %}<script src="https://kit.fontawesome.com/0a8e0495cf.js"></script>{% endblock %}
+    </body>
+</html>

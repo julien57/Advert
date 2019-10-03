@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue Sur JobbY{% endblock %}
+
+{% block body %}
+<main>
+	<section>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+             {{ form_widget(form) }}
+             {{ form_end(form) }}
+    </section>
+</main>
+{% endblock %}

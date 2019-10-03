@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue Sur JobbY{% endblock %}
+
+{% block body %}
+<main>
+	<h2>Liste des Annonces</h2>
+	<section>
+		<fieldset>
+		{% for advertTo in advertTo %}
+			 <ul>
+				<img src="{{advertTo.Advert.image.url}}"><br>
+				<br>
+				<p>Titre de l'annonce: {{advertTo.Advert.title}}</p>
+				<p>Auteur: {{advertTo.Advert.author}}</p>
+				<p>Categorie : 
+					{% for categorie in advertTo.Advert.Categorie %}
+						{{categorie.name}},
+					{% endfor %}</p>
+				<p>Description: {{advertTo.Advert.content}}</p>
+				<p>Competences Recquise : 
+					{% for competence in advertTo.Competence %}
+						{{competence.name}},
+					{% endfor %}</p>
+				<p>Niveau : 
+					{% for level in advertTo.Level %}
+						{{level.level}},
+					{% endfor %}</p>
+				<cite>Ecrit le; {{advertTo.Advert.date.date}}</cite><br>
+				<div class="rightbutton">
+				<a href="{{path('advert')}}"><i class="fas fa-undo"></i></i></a>
+				<a href="{{path('updateExe',{'id':advertTo.Advert.id})}}"><i class="fas fa-edit"></i></a>
+				<a href="{{path('remove',{'id':advertTo.Advert.id})}}"><i class="fas fa-trash-alt"></i></a>
+				</div>
+				<a href="{{path('postulate',{'id':advertTo.Advert.id})}}">Postuler</a>
+			</ul>
+		{% endfor %}
+		</fieldset>
+	</section>	
+</main>
+{% endblock %}

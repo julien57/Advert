@@ -1,0 +1,116 @@
+/* ****************HEADER****************** */
+header{
+	background-color: rgba(40, 198, 20, 0.9);
+	padding-top: 2rem;
+	background-attachment: fixed;
+}
+footer{
+	background-color: rgba(40, 198, 20, 0.9);
+	margin-top: 1.5rem;
+	padding-bottom: 1rem;
+}
+.headertitle{
+	display: flex;
+	justify-content: center;
+}
+header img{
+	width: 5rem;
+	height: 5rem;
+}
+footer img{
+	float: left;
+	width: 5rem;
+	height: 5rem;
+	margin-left: 4rem;
+	margin-right: 3rem;
+	background-attachment: fixed;
+}
+footer p{
+	margin-right: 4rem;
+	font-style: italic;
+	text-align: center;
+	background-attachment: fixed;
+}
+nav{
+	display: flex;
+	justify-content: space-around;
+	background-color: rgba(0, 0, 0, 0.8);
+	border: 1px solid black;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+nav a{
+	display: inline-block;
+	text-decoration: none;
+	font-size: 1.6rem;
+	color: rgba(97, 195, 84, 1);
+	padding: 1rem;
+}
+nav a:hover{
+	text-decoration: none;
+	font-weight: bold;
+	border-radius: 25px;
+	color: rgb(225, 225, 225);
+}
+body{
+	background-image: url("../img/background.png");
+}
+main{
+	width: 90%;
+	background-color: rgba(40, 198, 20, 0.9);
+	margin: auto;
+	padding: 3rem;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+	min-height: 40rem;
+	border-radius: 15px;
+}
+textarea{
+	width: 90%; 
+}
+i{
+	font-size: 2rem;
+	color: black;
+}
+.rightbutton{
+	text-decoration: none;
+	margin-left: 70%;
+	word-spacing: 3rem;
+	color: rgb(60, 160, 20);
+}
+.rightbutton i{
+	color: rgb(60, 160, 20);
+}
+.rightbutton i:hover{
+	color: black;
+	font-weight: bold;
+}
+fieldset img{
+	max-height: 30rem;
+	max-width: 50rem; 
+}
+h2{
+	text-align: center;
+}
+main a{
+	color: rgb(60, 160, 20);
+}
+main a:hover{
+	color: black;
+	font-weight: bold;
+}
+hr{
+	border: 1px solid black;
+}
+.advert{
+	display: inline-block;
+	border: 1px solid black;
+	border-radius: 10px;
+	box-shadow: -0.5rem 0.4em rgba(0, 0, 0, 0.7);
+	margin: 2rem 3rem;
+	background-color: rgba(225, 225, 225, 0.8);
+	width: 40%;
+}
+.advert:hover{
+	background-color: rgba(225, 225, 225, 1);
+}
