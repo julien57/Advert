@@ -35,7 +35,7 @@ nav{
 	display: flex;
 	justify-content: space-around;
 	background-color: rgba(0, 0, 0, 0.8);
-	border: 1px solid black;
+	border: 2px solid rgba(40, 198, 20, 0.9);
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
@@ -63,6 +63,7 @@ main{
 	padding-top: 3rem;
 	padding-bottom: 3rem;
 	min-height: 40rem;
+	border: 2px solid rgba(0, 0, 0, 0.8);
 	border-radius: 15px;
 }
 textarea{
