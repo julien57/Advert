@@ -1,11 +1,11 @@
 /* ****************HEADER****************** */
 header{
-	background-color: rgba(40, 198, 20, 0.9);
+	background-color: rgba(125, 255, 108, 0.1);
 	padding-top: 2rem;
 	background-attachment: fixed;
 }
 footer{
-	background-color: rgba(40, 198, 20, 0.9);
+	background-color: rgba(125, 255, 108, 0.1);
 	margin-top: 1.5rem;
 	padding-bottom: 1rem;
 }
@@ -53,11 +53,12 @@ nav a:hover{
 	color: rgb(225, 225, 225);
 }
 body{
-	background-image: url("../img/background.png");
+	background-image: url("../img/background.jpg");
+	background-size: cover;
 }
 main{
 	width: 90%;
-	background-color: rgba(40, 198, 20, 0.9);
+	background-color: rgba(0, 0, 0, 0.3);
 	margin: auto;
 	padding: 3rem;
 	padding-top: 3rem;
@@ -109,8 +110,9 @@ hr{
 	border-radius: 10px;
 	box-shadow: -0.5rem 0.4em rgba(0, 0, 0, 0.7);
 	margin: 2rem 3rem;
-	background-color: rgba(225, 225, 225, 0.8);
+	background-color: rgba(255, 255, 255, 0.6);
 	width: 40%;
+	padding: 2rem;
 }
 .advert:hover{
 	background-color: rgba(225, 225, 225, 1);
