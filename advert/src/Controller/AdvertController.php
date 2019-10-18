@@ -25,7 +25,7 @@ class AdvertController extends AbstractController
     /**
      * @Route("/advert", name="advert")
      */
-    public function index()
+    public function index(Request $request)
     {
     	$em = $this->getDoctrine()->getManager(); 
         $advert = $em->getRepository(Advert::class)->findAll();
@@ -40,10 +40,11 @@ class AdvertController extends AbstractController
         $nbResults = $advertskills->getNbResults();
         $currentPageResults = $advertskills->getCurrentPageResults();
 
-        if (isset($_GET["page"])) {
-            $advertskills->setCurrentPage($_GET["page"]);
+        if ($request->get('page')) {
+            $advertskills->setCurrentPage($request->get('page'));
         }
         $img = $em->getRepository(Image::class)->findAll();
+
         return $this->render('advert/index.html.twig', [
             'advertTab' => $advertskills, 'image' => $img,
         ]);
