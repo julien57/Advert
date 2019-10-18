@@ -24,7 +24,6 @@ class AdvertController extends AbstractController
 
     /**
      * @Route("/advert", name="advert")
-     * @Route("", name="index")
      */
     public function index()
     {
