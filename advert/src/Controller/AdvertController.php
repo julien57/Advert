@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\AdvertRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,30 +11,35 @@ use App\Entity\Advert;
 use App\Entity\AdvertSkill;
 use App\Entity\Image;
 use App\Entity\Application;
-use App\Entity\User;
 use App\Form\AdvertSkillType;
 use App\Form\ApplicationType;
 use App\Form\AdvertType;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use App\Personne\Personne as pers;
-use App\Entity\Personne;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdvertController extends AbstractController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * @Route("/advert", name="advert")
      */
-    public function index(Request $request)
+    public function index(Request $request, AdvertRepository $advertRepository)
     {
-    	$em = $this->getDoctrine()->getManager(); 
-        $advert = $em->getRepository(Advert::class)->findAll();
-        $adapter = new ArrayAdapter($advert);
+        $adverts = $advertRepository->findAll();
+        $adapter = new ArrayAdapter($adverts);
 
         $advertskills = new Pagerfanta( $adapter);
-
 
         $advertskills->setCurrentPage(1); // 1 by default
         $currentPage = $advertskills->getCurrentPage();
@@ -43,7 +50,7 @@ class AdvertController extends AbstractController
         if ($request->get('page')) {
             $advertskills->setCurrentPage($request->get('page'));
         }
-        $img = $em->getRepository(Image::class)->findAll();
+        $img = $this->em->getRepository(Image::class)->findAll();
 
         return $this->render('advert/index.html.twig', [
             'advertTab' => $advertskills, 'image' => $img,
@@ -55,10 +62,8 @@ class AdvertController extends AbstractController
      */
     public function advertdetails(Advert $advert)
     {
+        $advertTo = $this->em->getRepository(AdvertSkill::class)->findBy(array('Advert'=>$advert));
 
-        $em = $this->getDoctrine()->getManager(); 
-
-        $advertTo = $em->getRepository(AdvertSkill::class)->findBy(array('Advert'=>$advert));
         return $this->render('advert/advertdetails.html.twig', [
             'advertTo' => $advertTo,
         ]);
@@ -70,19 +75,15 @@ class AdvertController extends AbstractController
     public function advertAdd(Request $request)
     {
         $task = new AdvertSkill();
-
-
         $form = $this->createForm(AdvertSkillType::class , $task);
-        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $task = $form->getData();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($task);
-            $entityManager->flush();
+            $this->em->persist($task);
+            $this->em->flush();
 
             return $this->redirectToRoute('advert');
         }
@@ -96,13 +97,11 @@ class AdvertController extends AbstractController
      * @Route("/advert/remove/{id}", name="remove")
      */
     public function advertRemove(Advert $advert)
-    {          
-        $em = $this->getDoctrine()->getManager();
+    {
+        $advertTo = $this->em->getRepository(AdvertSkill::class)->findOneBy(array('Advert'=>$advert));
 
-        $advertTo = $em->getRepository(AdvertSkill::class)->findOneBy(array('Advert'=>$advert));
-
-        $em->remove($advertTo);
-        $em->flush();
+        $this->em->remove($advertTo);
+        $this->em->flush();
 
         return $this->redirectToRoute("advert");
     }
@@ -121,30 +120,25 @@ class AdvertController extends AbstractController
      * @Route("/advert/update/{id}/exe", name="updateExe")
      */
     public function advertupdateExe(Advert $advert, Request $request)
-    {   
-    	
-
-        $entityManager = $this->getDoctrine()->getManager();
-
+    {
         $form = $this->createForm(AdvertType::class , $advert);
-        
-        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $task = $form->getData();
             
-            $entityManager->persist($task);
-            $entityManager->flush();
+            $this->em->persist($task);
+            $this->em->flush();
 
             return $this->redirectToRoute('advert');
         }
 
      //   return $this->redirectToRoute("advert");
-        return $this->render('advert/updateForm.html.twig', ['form'=>$form->createView(),'advertTo'=>$task
-          
-    ]);
+        return $this->render('advert/updateForm.html.twig', [
+            'form' => $form->createView(),
+            'advertTo' => $advert
+        ]);
     }
 
     /**
@@ -154,17 +148,14 @@ class AdvertController extends AbstractController
     {
         $task = new Application();
         $form = $this->createForm(ApplicationType::class , $task);
-        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $data = $form->getData();
             $task->setAdvert($advert);
-            $entityManager = $this->getDoctrine()->getManager();
 
-            $entityManager->persist($task);
-            $entityManager->flush();
+            $this->em->persist($task);
+            $this->em->flush();
 
             return $this->redirectToRoute('advertdetails', array('id'=> $advert->getId())) ;
         }
