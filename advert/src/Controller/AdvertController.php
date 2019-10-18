@@ -51,14 +51,13 @@ class AdvertController extends AbstractController
     }
 
     /**
-     * @Route("/advert/{id}", name="advertdetails")
+     * @Route("/advert/{id}", name="advert_details")
      */
-    public function advertdetails($id)
+    public function advertdetails(Advert $advert)
     {
 
         $em = $this->getDoctrine()->getManager(); 
 
-        $advert = $em->getRepository(Advert::class)->find($id);
         $advertTo = $em->getRepository(AdvertSkill::class)->findBy(array('Advert'=>$advert));
         return $this->render('advert/advertdetails.html.twig', [
             'advertTo' => $advertTo,
@@ -96,10 +95,10 @@ class AdvertController extends AbstractController
     /**
      * @Route("/advert/remove/{id}", name="remove")
      */
-    public function advertRemove($id)
+    public function advertRemove(Advert $advert)
     {          
         $em = $this->getDoctrine()->getManager();
-        $advert = $em->getRepository(Advert::class)->find($id);
+
         $advertTo = $em->getRepository(AdvertSkill::class)->findOneBy(array('Advert'=>$advert));
 
         $em->remove($advertTo);
@@ -111,28 +110,23 @@ class AdvertController extends AbstractController
     /**
      * @Route("/advert/update/{id}", name="update")
      */
-    public function advertupdate($id)
-    {          
-        $em = $this->getDoctrine()->getManager();
-        $advertTo = $em->getRepository(Advert::class)->find($id);
-
+    public function advertupdate(Advert $advert)
+    {
         return $this->render('advert/update.html.twig', [
-            'advertTo' => $advertTo,
+            'advertTo' => $advert,
         ]);
     } 
 
     /**
      * @Route("/advert/update/{id}/exe", name="updateExe")
      */
-    public function advertupdateExe($id, Request $request)
+    public function advertupdateExe(Advert $advert, Request $request)
     {   
     	
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        $task = $entityManager->getRepository(Advert::class)->find($id);
-
-        $form = $this->createForm(AdvertType::class , $task);
+        $form = $this->createForm(AdvertType::class , $advert);
         
         
         $form->handleRequest($request);
@@ -156,11 +150,9 @@ class AdvertController extends AbstractController
     /**
      * @Route("/advert/post/{id}", name="postulate")
      */
-    public function postulateform($id, Request $request)
+    public function postulateform(Advert $advert, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $task = new Application();
-        $advert = $entityManager->getRepository(Advert::class)->find($id);
         $form = $this->createForm(ApplicationType::class , $task);
         
         $form->handleRequest($request);
@@ -174,7 +166,7 @@ class AdvertController extends AbstractController
             $entityManager->persist($task);
             $entityManager->flush();
 
-            return $this->redirectToRoute('advertdetails', array('id'=> $id)) ;
+            return $this->redirectToRoute('advertdetails', array('id'=> $advert->getId())) ;
         }
 
         return $this->render('advert/addForm.html.twig', [
